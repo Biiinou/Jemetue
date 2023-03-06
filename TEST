@@ -1,59 +1,48 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from MEC1315_STL import * 
+import struct
+from MEC1315_STL import *
 
-nom_fichier_in="humanoid.stl"
-f1,v1,n1=LireSTL(nom_fichier_in)
 
-nv1 = len(v1)
+#fonction fusion à créer
+def Fusion(*args):
+    l = len(args)
+    
+    for i in range(l):
+        if i == 0:            
+            f,v,n = args[i][0], args[i][1], args[i][2]
+            nv = len(v)
+        else:
+            f2,v2,n2 = args[i][0], args[i][1], args[i][2]
+            f = np.vstack((f,f2+nv))
+            v = np.vstack((v,v2))
+            n = np.vstack((n,n2))
+            nv = len(v)
+    return f,v,n
 
-for j in range(10):
-    if j == 0:
-        f1 = np.array(f1)
-    else:
-        f1 = np.array(f1+nv1)
-    
-    v2 = np.array(v1)
-    n2 = np.array(n1)  
-    
-    v2 = v2 + [0*j,10*j,0*j]
-    if j == 0 :
-        ft = np.array(f1)
-        vt = np.array(v2)
-        nt = np.array(n2)
-  
-    else:
-        ft = np.vstack((ft,f1))
-        vt = np.vstack((vt,v2))
-        nt = np.vstack((nt,n2))
-        
-    
-nvt = len(vt)
-for i in range(10):
-    if i == 0 :
-        ft = np.array(ft)
-    else:
-            
-        ft = np.array(ft+nvt)
-        
-    vt2 = np.array(vt)       
-    nt2 = np.array(nt)
-    
-        
-    vt2 = vt2 + [10*i,0*i,0*i]
-        
-    if i == 0:
-        fT = np.array(ft)
-        vT = np.array(vt2)
-        nT = np.array(nt2)
-        
-    else:
-         
-        fT = np.vstack((fT,ft))
-        vT = np.vstack((vT,vt2))
-        nT = np.vstack((nT,nt2))
-        
-nom_fichier_out="armée.stl"
-EcrireSTLASCII(nom_fichier_out,fT,vT,nT)
+#--------------------------------------------------
 
-on est capable
+moteur1=LireSTL('moteur1.stl')
+moteur2=LireSTL('moteur2.stl')
+moteur3=LireSTL('moteur3.stl')
+moteur4=LireSTL('moteur4.stl')
+moteur5=LireSTL('moteur5.stl')
+moteur6=LireSTL('moteur6.stl')
+moteur7=LireSTL('moteur7.stl')
+moteur8=LireSTL('moteur8.stl')
+
+f,v,n=Fusion(moteur1,moteur2,moteur3,moteur4,moteur5,moteur6,moteur7,moteur8)
+
+moteur123 = Fusion(moteur1,moteur2,moteur2)
+
+F,V,N = moteur123
+V = V + [50,1,5]
+moteur123[2] = V
+moteur123 = F,V,N
+#--------------------------------------------------
+moteur12345 = Fusion(moteur123,moteur4,moteur5)
+F1,V1,N1 = moteur12345
+
+nom_ecrire="moteur_assemble.stl"
+# EcrireSTLASCII(nom_ecrire,f,v,n)
+#EcrireSTLASCII(nom_ecrire,F,V,N)
+EcrireSTLASCII(nom_ecrire,F1,V1,N1)
