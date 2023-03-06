@@ -1,1 +1,57 @@
+import numpy as np
+import matplotlib.pyplot as plt
+from MEC1315_STL import * 
 
+nom_fichier_in="humanoid.stl"
+f1,v1,n1=LireSTL(nom_fichier_in)
+
+nv1 = len(v1)
+
+for j in range(10):
+    if j == 0:
+        f1 = np.array(f1)
+    else:
+        f1 = np.array(f1+nv1)
+    
+    v2 = np.array(v1)
+    n2 = np.array(n1)  
+    
+    v2 = v2 + [0*j,10*j,0*j]
+    if j == 0 :
+        ft = np.array(f1)
+        vt = np.array(v2)
+        nt = np.array(n2)
+  
+    else:
+        ft = np.vstack((ft,f1))
+        vt = np.vstack((vt,v2))
+        nt = np.vstack((nt,n2))
+        
+    
+nvt = len(vt)
+for i in range(10):
+    if i == 0 :
+        ft = np.array(ft)
+    else:
+            
+        ft = np.array(ft+nvt)
+        
+    vt2 = np.array(vt)       
+    nt2 = np.array(nt)
+    
+        
+    vt2 = vt2 + [10*i,0*i,0*i]
+        
+    if i == 0:
+        fT = np.array(ft)
+        vT = np.array(vt2)
+        nT = np.array(nt2)
+        
+    else:
+         
+        fT = np.vstack((fT,ft))
+        vT = np.vstack((vT,vt2))
+        nT = np.vstack((nT,nt2))
+        
+nom_fichier_out="armée.stl"
+EcrireSTLASCII(nom_fichier_out,fT,vT,nT)
