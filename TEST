@@ -20,6 +20,15 @@ def emplacement(x,y,z,v):
     v[:,1]=v[:,1]-(max(v[:,1])+min(v[:,1]))/2+y
     v[:,2]=v[:,2]-(max(v[:,2])+min(v[:,2]))/2+z
     return v
+    
+def rotation(v,angle,axe):
+    if axe =="z":
+        v=v.dot(np.array([[np.cos(angle),np.sin(angle),0],[-np.sin(angle),np.cos(angle),0],[0,0,1]]))
+    elif axe == "y":
+        v=v.dot(np.array([[np.cos(angle),0,np.sin(angle)],[0,1,0],[-np.sin(angle),0,np.cos(angle)]]))
+    elif axe == "x":
+        v=v.dot(np.array([[1,0,0],[0,np.cos(angle),np.sin(angle)],[0,-np.sin(angle),np.cos(angle)]]))
+    return v
 
 #fonction fusion à créer
 def Fusion(*args):
