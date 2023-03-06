@@ -3,6 +3,24 @@ import struct
 from MEC1315_STL import *
 
 
+def centrer(v):
+    v[:,0]=v[:,0]-(max(v[:,0])+min(v[:,0]))/2
+    v[:,1]=v[:,1]-(max(v[:,1])+min(v[:,1]))/2
+    v[:,2]=v[:,2]-(max(v[:,2])+min(v[:,2]))/2
+    return v
+
+def grandeur(x,y,z,v): #on doit le centrer avant
+    v[:,0]=v[:,0]/(max(v[:,0])-min(v[:,0]))*x
+    v[:,1]=v[:,1]/(max(v[:,1])-min(v[:,1]))*y
+    v[:,2]=v[:,2]/(max(v[:,2])-min(v[:,2]))*z
+    return v
+
+def emplacement(x,y,z,v):
+    v[:,0]=v[:,0]-(max(v[:,0])+min(v[:,0]))/2+x
+    v[:,1]=v[:,1]-(max(v[:,1])+min(v[:,1]))/2+y
+    v[:,2]=v[:,2]-(max(v[:,2])+min(v[:,2]))/2+z
+    return v
+
 #fonction fusion à créer
 def Fusion(*args):
     l = len(args)
