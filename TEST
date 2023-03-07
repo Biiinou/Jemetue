@@ -30,6 +30,15 @@ def rotation(v,angle,axe): #Permet de tourner le stl
         v=v.dot(np.array([[1,0,0],[0,np.cos(angle),np.sin(angle)],[0,-np.sin(angle),np.cos(angle)]]))
     return v
 
+def acote_plan(v,plan):
+    if plan =="xy":
+        v[:,2]=v[:,2]-min(v[:,2])
+    if plan =="xz":
+        v[:,1]=v[:,1]-min(v[:,1])
+    if plan =="yz":
+        v[:,0]=v[:,0]-min(v[:,0])
+    return v
+
 def Fusion(*args): #Permet de fusionner tous les stl pour Meshlab
     l = len(args) #Nombre d'élément à fusionner
     
@@ -45,32 +54,56 @@ def Fusion(*args): #Permet de fusionner tous les stl pour Meshlab
             nv = len(v)
     return f,v,n
 
-def RepCirculaire(nom,nb,r,a,axe): #Perment de faire une répétition circulaire du stl avec le nom, le nombre d'élément, le rayon, l'angle et l'axe de rotation
-                  
+def RepCirculaire(nom,nb,r,a,axe):                 
     f1,v1,n1=nom
-    nv1=len(v1)
-    
-    t=np.linspace(0,a,nb+1) #Perment de répartir le nombre d'objet équitablement autour de l'angle
+    nv1=len(v1)    
+    t=np.linspace(0,a,nb+1)
     t=t[:-1]
-    x,y=r*np.cos(t),r*np.sin(t)
-
-    for i in range(len(t)):
-        if i != 0: #Si f est le premier élément ne pas prendre en compte le nv1         
-            f1=np.array(f1+nv1)
-
-        v2=rotation(v1,t[i],'z')
-        v2=v2+[x[i],y[i],0] 
-
-        if i ==0: #Si f est le premier objet, ne pas prendre en compte f1, n1. v2 
-            ft=np.array(f1)
-            nt=np.array(n1)
-            vt=np.array(v2)
-
-        else:
-            ft=np.vstack((ft,f1))
-            nt=np.vstack((nt,n1))
-            vt=np.vstack((vt,v2))
-
+    if axe=="z":
+        x,y=r*np.cos(t),r*np.sin(t)
+        for i in range(len(t)):
+            if i != 0:          # ne pas augmenter le f si c'est le premier objet
+                f1=np.array(f1+nv1)
+            v2=rotation(v1,t[i],axe)
+            v2=v2+[x[i],y[i],0] 
+            if i ==0:               # pas faire le vstack si c'est le premier objet
+                ft=np.array(f1)
+                nt=np.array(n1)
+                vt=np.array(v2)
+            else:
+                ft=np.vstack((ft,f1))
+                nt=np.vstack((nt,n1))
+                vt=np.vstack((vt,v2))
+    elif axe=="y":
+        x,z=r*np.cos(t),r*np.sin(t)
+        for i in range(len(t)):
+            if i != 0:          # ne pas augmenter le f si c'est le premier objet
+                f1=np.array(f1+nv1)
+            v2=rotation(v1,t[i],axe)
+            v2=v2+[x[i],0,z[i]] 
+            if i ==0:               # pas faire le vstack si c'est le premier objet
+                ft=np.array(f1)
+                nt=np.array(n1)
+                vt=np.array(v2)
+            else:
+                ft=np.vstack((ft,f1))
+                nt=np.vstack((nt,n1))
+                vt=np.vstack((vt,v2))
+    elif axe=="x":
+        y,z=r*np.cos(t),r*np.sin(t)
+        for i in range(len(t)):
+            if i != 0:          # ne pas augmenter le f si c'est le premier objet
+                f1=np.array(f1+nv1)
+            v2=rotation(v1,t[i],axe)
+            v2=v2+[0,y[i],z[i]] 
+            if i ==0:               # pas faire le vstack si c'est le premier objet
+                ft=np.array(f1)
+                nt=np.array(n1)
+                vt=np.array(v2)
+            else:
+                ft=np.vstack((ft,f1))
+                nt=np.vstack((nt,n1))
+                vt=np.vstack((vt,v2))
     return ft,vt,nt
 
 
