@@ -248,3 +248,22 @@ def grandeurobjet(x,y,z,objet): #Permet de changer l'échelle du stl (homothéti
     v[:,1]=v[:,1]/(max(v[:,1])-min(v[:,1]))*y #mise à l'échelle composant y
     v[:,2]=v[:,2]/(max(v[:,2])-min(v[:,2]))*z #mise à l'échelle composant z
     return f,v,n
+    
+    def translation(objet, dep):#Déplacement donné sous la forme d'une matrice [dx,dy,dz]
+    f,v,n = objet
+    v = v + dep
+    objet = f,v,n
+    return objet
+
+def copy2(nom):
+    f,v,n = nom
+    nv = len(v)
+    fc = np.array(f+nv)
+    vc = np.array(v)
+    nc = np.array(n)
+    
+    f = np.vstack((f,fc))
+    v = np.vstack((v,vc))
+    n = np.vstack((n,nc))
+    return f,v,n
+
