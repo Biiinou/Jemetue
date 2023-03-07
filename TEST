@@ -54,19 +54,19 @@ def Fusion(*args): #Permet de fusionner tous les stl pour Meshlab
             nv = len(v)
     return f,v,n
 
-def RepCirculaire(nom,nb,r,a,axe):                 
+def RepCirculaire(nom,nb,r,a,axe): #Permet de faire une répétition circulaire selon un nombre d'élément, un rayon et un angle, sur un axe donné                 
     f1,v1,n1=nom
     nv1=len(v1)    
-    t=np.linspace(0,a,nb+1)
+    t=np.linspace(0,a,nb+1) #Perment de répartir le nombre d'élément équitablement sur l'angle
     t=t[:-1]
-    if axe=="z":            
+    if axe=="z": #Pour l'axe Z            
         x,y=r*np.cos(t),r*np.sin(t)
-    if axe=="y":            
+    if axe=="y": #Pour l'axe Y            
         x,z=r*np.cos(t),r*np.sin(t)
-    if axe=="x":            
+    if axe=="x": #Pour l'axe X             
         y,z=r*np.cos(t),r*np.sin(t)   
     for i in range(len(t)):
-        if i != 0:          # ne pas augmenter le f si c'est le premier objet
+        if i != 0: #Si f est le premier élément, ne pas prendre en compte nv1 
             f1=np.array(f1+nv1)
         v2=rotation(v1,t[i],axe)
         if axe=="z":
@@ -75,7 +75,7 @@ def RepCirculaire(nom,nb,r,a,axe):
             v2=v2+[x[i],0,z[i]] 
         if axe=="x":
             v2=v2+[0,y[i],z[i]]
-        if i ==0:               # pas faire le vstack si c'est le premier objet
+        if i ==0: #Si f est le premier élément, ne pas prendre en compte ft,nt et vt 
             ft=np.array(f1)
             nt=np.array(n1)
             vt=np.array(v2)
