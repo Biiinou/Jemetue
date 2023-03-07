@@ -3,22 +3,22 @@ import struct
 from MEC1315_STL import *
 
 
-def centrer(v):
-    v[:,0]=v[:,0]-(max(v[:,0])+min(v[:,0]))/2
-    v[:,1]=v[:,1]-(max(v[:,1])+min(v[:,1]))/2
-    v[:,2]=v[:,2]-(max(v[:,2])+min(v[:,2]))/2
+def centrer(v): #Permet de centrer le stl en(0,0,0)
+    v[:,0]=v[:,0]-(max(v[:,0])+min(v[:,0]))/2 #centre axe x
+    v[:,1]=v[:,1]-(max(v[:,1])+min(v[:,1]))/2 #centre axe y
+    v[:,2]=v[:,2]-(max(v[:,2])+min(v[:,2]))/2 #centre axe z
     return v
 
-def grandeur(x,y,z,v): #on doit le centrer avant
-    v[:,0]=v[:,0]/(max(v[:,0])-min(v[:,0]))*x
-    v[:,1]=v[:,1]/(max(v[:,1])-min(v[:,1]))*y
-    v[:,2]=v[:,2]/(max(v[:,2])-min(v[:,2]))*z
+def grandeur(x,y,z,v): #Permet de changer l'échelle du stl (homothétie), Dois utiliser centrer avant
+    v[:,0]=v[:,0]/(max(v[:,0])-min(v[:,0]))*x #mise à l'échelle composant x
+    v[:,1]=v[:,1]/(max(v[:,1])-min(v[:,1]))*y #mise à l'échelle composant y
+    v[:,2]=v[:,2]/(max(v[:,2])-min(v[:,2]))*z #mise à l'échelle composant z
     return v
 
-def emplacement(x,y,z,v):
-    v[:,0]=v[:,0]-(max(v[:,0])+min(v[:,0]))/2+x
-    v[:,1]=v[:,1]-(max(v[:,1])+min(v[:,1]))/2+y
-    v[:,2]=v[:,2]-(max(v[:,2])+min(v[:,2]))/2+z
+def emplacement(x,y,z,v): #Permet de déplacer le stl
+    v[:,0]=v[:,0]-(max(v[:,0])+min(v[:,0]))/2+x #déplacement en x
+    v[:,1]=v[:,1]-(max(v[:,1])+min(v[:,1]))/2+y #déplacement en y
+    v[:,2]=v[:,2]-(max(v[:,2])+min(v[:,2]))/2+z #déplacement en z
     return v
     
 def rotation(v,angle,axe):
