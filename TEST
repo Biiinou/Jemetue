@@ -35,10 +35,10 @@ def Fusion(*args): #Permet de fusionner tous les stl pour Meshlab
     
     for i in range(l): #Fusion des éléments
         if i == 0:            
-            f,v,n = args[i][0], args[i][1], args[i][2]
+            f,v,n = args[i]
             nv = len(v)
         else:
-            f2,v2,n2 = args[i][0], args[i][1], args[i][2]
+            f2,v2,n2 = args[i]
             f = np.vstack((f,f2+nv))
             v = np.vstack((v,v2))
             n = np.vstack((n,n2))
