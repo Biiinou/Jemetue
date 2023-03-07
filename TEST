@@ -123,3 +123,25 @@ def reprect(nom,nbx,nby,nbz,dx,dy,dz):
 
 cube=cube[0],grandeur(200,50,20,centrer(cube[1])),cube[2]
 triangle=Fusion((triangle[0],acote_plan(acote_plan(grandeur(180,80,20,centrer(triangle[1])),"xz"),"yz"),triangle[2]),(triangle[0],sim(acote_plan(acote_plan(grandeur(180,80,20,centrer(triangle[1])),"xz"),"yz"),"y"),sim(triangle[2],"vertex")))
+
+#===========Hangar=============#
+cube=LireSTL("Cube.stl")
+
+mur=cube[0],grandeur(400, 2, 20, cube[1]),cube[2]
+toit=RepCirculaire(mur, 25, 150, np.pi, 'x')
+
+devant=cube[0],grandeur(2, 60, 10, cube[1]),cube[2]
+devant=RepCirculaire(devant, 50, 95, np.pi, 'x')
+
+derriere=cube[0],grandeur(2, 152, 10, cube[1]),cube[2]
+derriere=derriere[0],emplacement(400, 75, 0, derriere[1]),derriere[2]
+derriere=RepCirculaire(derriere, 50, 0, np.pi, 'x')
+
+Hangar=Fusion(toit,devant,derriere)
+ff,vf,nf = Hangar
+nom_out='hangar.stl'
+EcrireSTLASCII(nom_out, ff, vf, nf)
+
+
+
+
