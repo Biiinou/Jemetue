@@ -142,6 +142,45 @@ ff,vf,nf = Hangar
 nom_out='hangar.stl'
 EcrireSTLASCII(nom_out, ff, vf, nf)
 
-
+#FONCTIN DEFECTUEUSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+def reprect1(nom,nbx,nby,nbz,dx,dy,dz):
+    f,v,n = nom
+    nv = len(v)
+    for i in range(nbx):
+        if i == 0 :
+            f = np.array(f)
+        else:
+            f = np.array(f+nv)
+        v2 = np.array(v)       
+        n2 = np.array(n)
+        v = v + [dx,0,0]
+        if i == 0:
+            fx = np.array(f)
+            vx = np.array(v2)
+            nx = np.array(n2)
+        else:
+            fx = np.vstack((fx,f))
+            vx = np.vstack((vx,v2))
+            nx = np.vstack((nx,n2))
+    nvx = len(vx)
+    for j in range(nby):
+        if j == 0:
+            fx = np.array(fx)
+        else:
+            fx = np.array(fx+nvx)
+        vx2 = np.array(vx)
+        nx2 = np.array(nx)
+        vx = vx + [0,dy,0]
+        print(vx)
+        if j == 0:
+            fxy = np.array(fx)
+            vxy = np.array(vx2)
+            nxy = np.array(nx2)
+        else:
+            fxy = np.vstack((fxy,fx))
+            vxy = np.vstack((vxy,vx))
+            nxy = np.vstack((nxy,nx))
+            
+    return fxy,vxy,nxy
 
 
