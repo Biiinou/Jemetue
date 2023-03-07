@@ -135,4 +135,35 @@ EcrireSTLASCII(nom_out, ft, vt, nt)
 
 
 
+#================
+def RepCirculaire(nom,nb,r,a,axe):
+
+    nom_fichier_in=nom                  #ou remplacer les deux lignes suivantes par__ f1,v1,n1=nom __ si le LireSTL est fait en dehors
+    f1,v1,n1=LireSTL(nom_fichier_in)
+    nv1=len(v1)
+    nb1=nb+1
+    
+    t=np.linspace(0,a,nb1)    #mettre arrange ou linspace
+    t=t[:-1]
+    x,y=r*np.cos(t),r*np.sin(t)
+
+    for i in range(len(t)):
+        if i != 0:          # ne pas augmenter le f si c'est le premier objet
+            f1=np.array(f1+nv1)
+
+        v2=rotation(v1,t[i],'z')
+        v2=v2+[x[i],y[i],0] 
+
+        if i ==0:               # pas faire le vstack si c'est le premier objet
+            ft=np.array(f1)
+            nt=np.array(n1)
+            vt=np.array(v2)
+
+        else:
+            ft=np.vstack((ft,f1))
+            nt=np.vstack((nt,n1))
+            vt=np.vstack((vt,v2))
+
+    return ft,vt,nt
+
 
