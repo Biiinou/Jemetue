@@ -207,16 +207,10 @@ def reprect3Dprof(nom,nbx,nby,nbz,dx,dy,dz):#Ne pas mettre zero lorqu'un axe n'e
 #==================================================================================================================================
 def copycentre(nom):
     f,v,n = nom
-    nv = len(v)
-    fc = np.array(f+nv)
+    fc = np.array(f)
     vc = np.array(v)
     nc = np.array(n)
-    
     vc[:,0]=vc[:,0]-(max(vc[:,0])+min(vc[:,0]))/2 #centre axe x
     vc[:,1]=vc[:,1]-(max(vc[:,1])+min(vc[:,1]))/2 #centre axe y
     vc[:,2]=vc[:,2]-(max(vc[:,2])+min(vc[:,2]))/2 #centre axe z
-    
-    f = np.vstack((f,fc))
-    v = np.vstack((v,vc))
-    n = np.vstack((n,nc))
-    return f,v,n
+    return fc,vc,nc
