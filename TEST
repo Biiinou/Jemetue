@@ -85,4 +85,24 @@ def RepCirculaire(nom,nb,r,a,axe): #Permet de faire une répétition circulaire 
             vt=np.vstack((vt,v2))
     return ft,vt,nt
 
-
+def reprect(nom,nbx,nby,nbz,dx,dy,dz):
+    f,v,n = nom
+    nv = len(v)
+    for i in range(nbx):
+        if i == 0 :
+            f = np.array(f)
+        else:
+            f = np.array(f+nv)
+        v2 = np.array(v)       
+        n2 = np.array(n)
+        v = v + [dx,0,0]
+        if i == 0:
+            fx = np.array(f)
+            vx = np.array(v2)
+            nx = np.array(n2)
+        else:
+            fx = np.vstack((fx,f))
+            vx = np.vstack((vx,v2))
+            nx = np.vstack((nx,n2))
+    return fx,vx,nx
+   
