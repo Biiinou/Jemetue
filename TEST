@@ -106,3 +106,20 @@ def reprect(nom,nbx,nby,nbz,dx,dy,dz):
             nx = np.vstack((nx,n2))
     return fx,vx,nx
    
+   
+   
+   
+   def sim(v,axe):
+    if axe=="x":
+        s=np.array([[-1,0,0],[0,1,0],[0,0,1]])
+    if axe=="y":
+        s=np.array([[1,0,0],[0,-1,0],[0,0,1]])
+    if axe=="z":
+        s=np.array([[1,0,0],[0,1,0],[0,0,-1]])
+    if axe=="vertex":
+        s=np.array([[-1,0,0],[0,1,0],[0,0,-1]])
+    v=np.dot(v,s)
+    return v
+
+cube=cube[0],grandeur(200,50,20,centrer(cube[1])),cube[2]
+triangle=Fusion((triangle[0],acote_plan(acote_plan(grandeur(180,80,20,centrer(triangle[1])),"xz"),"yz"),triangle[2]),(triangle[0],sim(acote_plan(acote_plan(grandeur(180,80,20,centrer(triangle[1])),"xz"),"yz"),"y"),sim(triangle[2],"vertex")))
