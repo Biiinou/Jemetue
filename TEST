@@ -21,20 +21,19 @@ def emplacement(x,y,z,v): #Permet de déplacer le stl
     v[:,2]=v[:,2]-(max(v[:,2])+min(v[:,2]))/2+z #déplacement en z
     return v
     
-def rotation(v,angle,axe):
-    if axe =="z":
+def rotation(v,angle,axe): #Permet de tourner le stl
+    if axe =="z": #Tourne sur l'axe z
         v=v.dot(np.array([[np.cos(angle),np.sin(angle),0],[-np.sin(angle),np.cos(angle),0],[0,0,1]]))
-    elif axe == "y":
+    elif axe == "y": #Tourne sur l'axe y
         v=v.dot(np.array([[np.cos(angle),0,np.sin(angle)],[0,1,0],[-np.sin(angle),0,np.cos(angle)]]))
-    elif axe == "x":
+    elif axe == "x": #Tourne sur l'axe x
         v=v.dot(np.array([[1,0,0],[0,np.cos(angle),np.sin(angle)],[0,-np.sin(angle),np.cos(angle)]]))
     return v
 
-#fonction fusion à créer
-def Fusion(*args):
-    l = len(args)
+def Fusion(*args): #Permet de fusionner tous les stl pour Meshlab
+    l = len(args) #Nombre d'élément à fusionner
     
-    for i in range(l):
+    for i in range(l): #Fusion des éléments
         if i == 0:            
             f,v,n = args[i][0], args[i][1], args[i][2]
             nv = len(v)
