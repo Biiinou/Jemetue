@@ -183,4 +183,24 @@ def reprect1(nom,nbx,nby,nbz,dx,dy,dz):
             
     return fxy,vxy,nxy
 
-
+def reprect3Dprof(nom,nbx,nby,nbz,dx,dy,dz):#Ne pas mettre zero lorqu'un axe n'est pas utilisé
+    f,v,n = nom
+    nv = len(v)
+    fe = np.empty([0,3])
+    ve = np.empty([0,3])
+    ne = np.empty([0,3])
+    compteur = 0
+    for i in range(nbx):
+        for j in range(nby):
+            for k in range(nbz):
+                v2 = np.array(v)
+                v2[:,0] = v2[:,0] + (i)*dx
+                v2[:,1] = v2[:,1] + (j)*dy
+                v2[:,2] = v2[:,2] + (k)*dz
+                ve = np.vstack((ve,v2))
+                f2 = np.array(f)
+                decal = compteur*nv
+                fe = np.vstack((fe,f+decal))
+                compteur+=1
+    ne = CalculNormal(fe, ve)
+    return fe,ve,ne
