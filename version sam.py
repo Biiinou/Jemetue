@@ -177,8 +177,8 @@ for i in range (8):
         cylindre2=Fusion(cylindre2,c)
         
 base=copycentre(cube)
-base=grandeur(3200,5000,10,base)
-base=emplacement(0,1250,0,base)
+base=grandeur(3200,6000,10,base)
+base=emplacement(0,750,0,base)
 
 tour = Fusion(diamant1,diamant2, cylindre1, cylindre2)
 tour = Fusion((tour[0],tour[1]*1.5,tour[2]),base)
