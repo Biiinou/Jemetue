@@ -460,4 +460,88 @@ gazonfin=Fusion(gazon1,gazon2,gazon3,gazon4,gazon5,gazon6,gazon7,gazon8,gazon9,g
 
 
 
+#===================================Entrepot
+
+entrepotbase = Fusion(batisse,bordure4,bordure5,bordure6)
+entrepotbase = rotation(entrepotbase,np.pi,'z')
+
+bloc1 = copycentre(entrepotbase)
+bloc1 = grandeur(500,700,120,bloc1)
+bloc1 = acote_plan(bloc1, "xy")
+
+#quai = quai de chargement
+quai = copycentre(cube)
+quai = grandeur(10,70,10,quai)
+quai = translation(quai, [0,-35,35])
+quai = RepCirculaire(quai,4,30,2*np.pi,'x')
+quais = reprect3D(quai, 1, 6, 1, 1, 100, 1)
+quais = translation(quais, [-242,-250,50])
+airvent1 = copycentre(airvent)
+airvents = reprect3D(airvent1,4,4,1,110,160,1)
+airvents = translation(airvents, [-170,-270,120])
+
+bloc1 = Fusion(bloc1,quais, airvents)
+bloc1 = grandeur(800,700,120,bloc1)
+bloc1 = translation(bloc1,[100,0,0])
+
+bloc2 = copycentre(entrepotbase)
+bloc2 = grandeur(500,400,70,bloc2)
+bloc2 = acote_plan(bloc2, "xy")
+bloc2 = rotation(bloc2,np.pi,'z')
+bloc2 = translation(bloc2, [0,100,0])
+
+plaque = copycentre(cube)
+plaque = grandeur(510,410,10,plaque)
+plaque = translation(plaque,[0,90,0])
+
+bloc2 = Fusion(bloc2,plaque)
+
+bloc2 = translation(bloc2, [0,0,100])
+#Piliers du quai de chargement
+
+pilier = copycentre(cylindre)
+pilier = grandeur(20,20,100,pilier)
+pilier = acote_plan(pilier, 'xy')
+pilier = rotationcyl(pilier, 8, 'z')
+piliers = reprect3D(pilier, 2, 5, 1, 70, 90, 1)
+piliers = translation(piliers, [-200,-90,0])
+
+bloc2 = Fusion(bloc2,piliers)
+
+bloc2 = translation(bloc2,[0,-635,0])
+
+bloc3 = copycentre(entrepotbase)
+bloc3 = acote_plan(entrepotbase,'xy')
+bloc3 = rotation(bloc3,np.pi,'z')
+bloc3 = grandeur(250,380,120,bloc3)
+bloc3 = translation(bloc3,[100,-340,0])
+
+sortietoit = copycentre(airvent)
+sortietoit = acote_plan(sortietoit, 'xy')
+sortietoit = grandeur(50,100,40,sortietoit)
+
+porte = copycentre(porte)
+porte = acote_plan(porte, 'xy')
+porte = rotation(porte, 0.5*np.pi, 'z')
+porte = translation(porte,[0,50,0])
+
+
+sortietoit = Fusion(sortietoit,porte)
+sortietoit = translation(sortietoit, [0,-600,160])
+
+
+
+
+caisse = copycentre(cube)
+caisse = grandeur(70,70,70,caisse)
+renfortcaisse = copycentre(quai)
+renfortcaisse = translation(quai,[35,0,0])
+renfortcaisse = RepCirculaire(renfortcaisse, 4, 0, 2*np.pi, 'z')
+caisse = Fusion(caisse,renfortcaisse)
+
+caisses = reprect3D(caisse,3,4,3,87,95,83)
+caisses = translation(caisses,[600,-1050,43])
+caisses = agrandissement(caisses, 0.5)
+
+entrepot = Fusion(bloc1,bloc2,bloc3,sortietoit,caisses)
 
