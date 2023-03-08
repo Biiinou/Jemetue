@@ -21,7 +21,7 @@ triangle = LireSTL("Triangle.stl")
 cube = LireSTL("Cube.stl")
 f18=LireSTL('fighter_jet_f18.stl')
 
-def acote_plan(objet,plan): #Perment de déposer le stl sur un plan
+def acote_plan(objet,plan): #Perment de déposer un objet sur un plan
     f1,v1,n1=objet
     f,v,n=np.array(f1),np.array(v1),np.array(n1)
     if plan =="xy": #Sur plan XY
@@ -32,7 +32,7 @@ def acote_plan(objet,plan): #Perment de déposer le stl sur un plan
         v[:,0]=v[:,0]-min(v[:,0])
     return f,v,n
     
-def emplacement(x,y,z,objet): #Permet de déplacer le stl
+def emplacement(x,y,z,objet): #Permet de déplacer un objet
     f1,v1,n1=objet
     f,v,n=np.array(f1),np.array(v1),np.array(n1)
     v[:,0]=v[:,0]-(max(v[:,0])+min(v[:,0]))/2+x #déplacement en x
@@ -41,7 +41,7 @@ def emplacement(x,y,z,objet): #Permet de déplacer le stl
     
     return f,v,n
     
-def grandeur(x,y,z,objet): #Permet de changer l'échelle du stl (homothétie), Dois utiliser centrer avant
+def grandeur(x,y,z,objet): #Permet de changer l'échelle de l'objet (homothétie), Dois utiliser centrer avant
     f1,v1,n1=objet
     f,v,n=np.array(f1),np.array(v1),np.array(n1)
     v[:,0]=v[:,0]/(max(v[:,0])-min(v[:,0]))*x #mise à l'échelle composant x
@@ -49,7 +49,7 @@ def grandeur(x,y,z,objet): #Permet de changer l'échelle du stl (homothétie), D
     v[:,2]=v[:,2]/(max(v[:,2])-min(v[:,2]))*z #mise à l'échelle composant z
     return f,v,n
 
-def rotation(objet,angle,axe): #Permet de tourner le stl
+def rotation(objet,angle,axe): #Permet de tourner un objet
     f1,v1,n1=objet
     f,v,n=np.array(f1),np.array(v1),np.array(n1)
     if axe =="z": #Tourne sur l'axe z
@@ -60,7 +60,7 @@ def rotation(objet,angle,axe): #Permet de tourner le stl
         v=v.dot(np.array([[1,0,0],[0,np.cos(angle),np.sin(angle)],[0,-np.sin(angle),np.cos(angle)]]))
     return f,v,n
 
-def copycentre(nom):
+def copycentre(nom): #Permet de dupliquer un objet et de le centrer en (0,0,0)
     f,v,n = nom
     fc = np.array(f)
     vc = np.array(v)
@@ -71,19 +71,19 @@ def copycentre(nom):
     objet=fc,vc,nc
     return objet        
     
-def RepCirculaire(nom,nb,r,a,axe):                 
+def RepCirculaire(nom,nb,r,a,axe): #Permet de faire une répétition circulaire d'un objet en fonction du nombre, du rayon, de l'angle et de l'axe (L'objet doit être centré)
     f1,v1,n1=nom
     nv1=len(v1)    
-    t=np.linspace(0,a,nb+1)
+    t=np.linspace(0,a,nb+1) #Permet de répartir uniformément les instances sur l'angle donné
     t=t[:-1]
-    if axe=="z":            
+    if axe=="z": #Autour de l'axe z       
         x,y=r*np.cos(t),r*np.sin(t)
-    if axe=="y":            
+    if axe=="y": #Autour de l'axe y            
         x,z=r*np.cos(t),r*np.sin(t)
-    if axe=="x":            
+    if axe=="x": #Autour de l'axe x         
         y,z=r*np.cos(t),r*np.sin(t)   
     for i in range(len(t)):
-        if i != 0:          # ne pas augmenter le f si c'est le premier objet
+        if i != 0: #F n'est pas modifié si c'est le premier objet
             f1=np.array(f1+nv1)
         objet2=rotation(nom,t[i],axe)
         f2,v2,n2=objet2
@@ -93,7 +93,7 @@ def RepCirculaire(nom,nb,r,a,axe):
             v2=v2+[x[i],0,z[i]] 
         if axe=="x":
             v2=v2+[0,y[i],z[i]]
-        if i ==0:               # pas faire le vstack si c'est le premier objet
+        if i ==0: #Ne pas faire de vstack si c'est le premier objet
             ft=np.array(f1)
             nt=np.array(n1)
             vt=np.array(v2)
@@ -104,13 +104,13 @@ def RepCirculaire(nom,nb,r,a,axe):
         objet=ft,vt,nt
     return objet
 
-def Fusion(*args):
+def Fusion(*args): #Permet de fusionner tous les objets ensemble
     l = len(args) 
     for i in range(l):
-        if i == 0:            
+        if i == 0: #Prends les données du premier objet 
             f,v,n = args[i]
             nv = len(v)
-        else:
+        else: #Ajoute les données des autres objets au premier
             f2,v2,n2 = args[i]
             f = np.vstack((f,f2+nv))
             v = np.vstack((v,v2))
@@ -119,7 +119,7 @@ def Fusion(*args):
         objet=f,v,n
     return objet     
 
-def copieob(objet):
+def copieob(objet): #Permet de copier un objet (sans le centrer) (utilisée pour la fonction reprect3D)
     f,v,n = objet
     fc = np.array(f)
     vc = np.array(v)
@@ -127,30 +127,30 @@ def copieob(objet):
     objet = fc,vc,nc
     return objet
 
-def dupliquer(objet):
+def dupliquer(objet): #Permet de dupliquer un objet (sans le centrer)
     f1,v1,n1=objet
     f,v,n=np.array(f1),np.array(v1),np.array(n1)
     return f,v,n
 
-def translation(objet, dep):#Déplacement donné sous la forme d'une matrice [dx,dy,dz]
+def translation(objet, dep): #Permet de déplacer un objet (utilisée pour la fonction reprect3D) (le déplacement est donné sous la forme d'une matrice [dx,dy,dz])
     f,v,n = objet
     v = v + dep
     objet = f,v,n
     return objet
 
-def reprect3D(objet,nbx,nby,nbz,dx,dy,dz): #Si l'instance est 0, mettre 1
+def reprect3D(objet,nbx,nby,nbz,dx,dy,dz): #Permet de faire une répétition rectangulaire en fonction du nombre d'objet dans chaque direstion et l'espacement entre les objets (si le nombre d'objet voulu est 0, mettre 1)
     rep = np.empty((3,3))
-    for i in range(nbx):
-        for j in range(nby):
-            for k in range(nbz):
+    for i in range(nbx): #Axe x
+        for j in range(nby): #Axe y
+            for k in range(nbz): #Axe z
                 copie = copieob(objet)
                 copie = translation(objet, [i*dx,j*dy,k*dz])
                 rep = Fusion(copie,rep)         
     return rep
 
-def rotationcyl(objet,nb,axe): #Permet de rendre le cylindre rond
+def rotationcyl(objet,nb,axe): #Permet de dupliquer le cylindre pour le rendre rond
     for i in range (nb):
-        c=rotation(objet,np.pi*i/nb,axe) #fait la rotation autour de l'axe
+        c=rotation(objet,np.pi*i/nb,axe) #Effectue la rotation autour de l'axe
         if i == 0:
             objet2=c
         else:
