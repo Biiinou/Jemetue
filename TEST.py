@@ -283,3 +283,22 @@ def copy2(nom):
     n = np.vstack((n,nc))
     return f,v,n
 
+#=====================================================================================================================
+#Nouvelle fonction répétition a utiliser
+
+def reprect3D(objet,nbx,nby,nbz,dx,dy,dz):
+    rep = []
+    for i in range(nbx):
+        for j in range(nby):
+            for k in range(nbz):
+                copie = copieob(objet)
+                copie = translation(objet, [i*dx,j*dy,k*dz])
+                rep += [copie]
+                
+    for i in range(len(rep)):
+        if i == 0:
+            repet = rep[0]
+        else:
+            repet = Fusion(rep[i],repet)
+            
+    return repet
