@@ -365,3 +365,20 @@ helipad=emplacement(0, 3000, 20, helipad)
 
 f,v,n=Fusion(dogfight,tour,piste,Hangar,building,taxiway,helipad)
 EcrireSTLASCII("test.stl", f, v, n)
+
+
+#==========fusion opimisé======
+
+def Fusion(*args):
+    
+    l = len(args) 
+    f,v,n=np.empty((3,3))
+    nv=1
+    for i in range(l):
+        f1,v1,n1 = args[i]
+        f = np.vstack((f,f1+nv))
+        v = np.vstack((v,v1))
+        n = np.vstack((n,n1))
+        nv = len(v)
+        objet=f,v,n
+    return objet
