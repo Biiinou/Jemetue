@@ -154,11 +154,21 @@ def reprect3D(objet,nbx,nby,nbz,dx,dy,dz): #Si l'instance est 0, mettre 1
             
     return repet
 
+def rotationcyl(objet,nb,axe): #Permet de rendre le cylindre rond
+    for i in range (nb):
+        c=rotation(objet,np.pi*i/nb,axe) #fait la rotation autour de l'axe
+        if i == 0:
+            objet2=c
+        else:
+            objet2=Fusion(objet2,c)
+    return objet2
     
+
 #tour de contrôle
 cylindre1=copycentre(cylindre)
 cylindre1=grandeur(160,160,400,cylindre1)
 cylindre1=acote_plan(cylindre1,"xy")
+cylindre1=rotationcyl(cylindre1,8,"z")
 
 diamant1=copycentre(diamant)
 diamant1=grandeur(300,300,240,diamant1)
@@ -167,20 +177,12 @@ diamant1=emplacement(0,0,max(cylindre1[1][:,2]),diamant1)
 diamant2=copycentre(diamant)
 diamant2=grandeur(240,240,180,diamant2)
 diamant2=emplacement(0,0,max(diamant1[1][:,2])-20,diamant2)
-
-
-for i in range (8):
-    c=rotation(cylindre1,np.pi*i/8,"z")
-    if i == 0:
-        cylindre2=c
-    else:
-        cylindre2=Fusion(cylindre2,c)
         
 base=copycentre(cube)
 base=grandeur(3200,7000,10,base)
 base=emplacement(0,250,0,base)
 
-tour = Fusion(diamant1,diamant2, cylindre1, cylindre2)
+tour = Fusion(diamant1,diamant2, cylindre1)
 tour = Fusion((tour[0],tour[1]*1.5,tour[2]),base)
 
 
@@ -188,7 +190,7 @@ tour = Fusion((tour[0],tour[1]*1.5,tour[2]),base)
 f18a=copycentre(f18)
 f18a=grandeur(250,250,90,f18a)
 f18a=rotation(f18a,0.75*np.pi/2,"y")
-f18a=emplacement(0,0,max(tour[1][:,2]),f18a)
+f18a=emplacement(0,0,max(tour[1][:,2]+200),f18a)
 dogfight=RepCirculaire(f18a, 3, 700, 2*np.pi, 'z')
 tour=Fusion(tour,dogfight)
 
@@ -245,7 +247,8 @@ piste=grandeur(250,5000,30,piste)
 piste=emplacement(-950,1250,0,piste)
 
 f18b=copycentre(f18)
-f18b=rotation(rotation((grandeur(250,250,90,f18b)),-0.15*np.pi/2,"x"),np.pi,"z")
+f18b=grandeur(250,250,90,f18b)
+f18b=rotation(rotation(f18b,-0.15*np.pi/2,"x"),np.pi,"z")
 f18b=emplacement(-950,3500,100,f18b)
 
 piste=Fusion(cube1,fleche,ligne1,ligne2,ligne3,piste,f18b)
@@ -263,8 +266,6 @@ batisse=grandeur(200, 600, 100, cube)
 batisse=emplacement(0, -300, 50, batisse)
 petit=grandeur(300, 300, 60, cube)
 petit=emplacement(50, 100, 30, petit)
-#petit=acote_planobjet(petit, 'yz')
-
 
 toit1=grandeur(100, 300, 174, cube)
 toit1=emplacement(100, 0, 0, toit1)
@@ -315,10 +316,52 @@ porte=emplacement(0, -150, 10, porte)
 building=Fusion(batisse,rotonde,petit,toit,bordure,airvent,porte)
 building=building[0],building[1]*1.5,building[2]
 
+
 #taxiway
-# taxiway=copycentre(cube)
-# taxiway=grandeur
+taxiway=copycentre(cube)
+taxiway=grandeur(250,2570,20,taxiway)
+taxiway=emplacement(900,70,0,taxiway)
 
-f,v,n=Fusion(dogfight,tour,piste,Hangar,building)
+taxiway2=copycentre(cube)
+taxiway2=grandeur(250,940,20,taxiway2)
+taxiway2=rotation(taxiway2,np.pi/4,"z")
+taxiway2=emplacement(600,1600,0,taxiway2)
 
+f18c=copycentre(f18)
+f18c=grandeur(250,250,90,f18c)
+f18c=rotation(f18c,1.2*np.pi,"z")
+f18c=emplacement(900,-800,65,f18c)
+f18c=reprect3D(f18c,1,3,1,1,500,1)
+
+taxiway=Fusion(taxiway,taxiway2,f18c)
+
+
+#helipad
+cote=grandeur(6, 40, 10, cube)
+cote=emplacement(0, 0, 20, cote)
+cote=RepCirculaire(cote, 33, 200, 2*np.pi, 'z')
+cote=emplacement(0, 3000, 20, cote)
+
+H=grandeur(180, 10, 15, cube)
+H=reprect3D(H, 1, 2, 1, 1, 130, 1)
+H=emplacement(0, 3000, 20, H)
+
+bar=grandeur(10, 130, 15, cube)
+bar=emplacement(0, 3000, 20, bar)
+
+base=grandeur(500, 500, 20, cube)
+base=emplacement(0, 3000, 6, base)
+
+marche=grandeur(20, 20, 100, triangle)
+marche=rotation(marche, np.pi/2, 'y')
+marche=rotation(marche, 3*np.pi/2, 'z')
+marche=emplacement(10, 0,6 , marche)
+marche=RepCirculaire(marche, 4, 250, 2*np.pi, 'z')
+marche=emplacement(0, 3000, 6, marche)
+
+helipad=Fusion(cote,H,bar,base,marche)
+helipad=emplacement(0, 3000, 20, helipad)
+
+
+f,v,n=Fusion(dogfight,tour,piste,Hangar,building,taxiway,helipad)
 EcrireSTLASCII("test.stl", f, v, n)
