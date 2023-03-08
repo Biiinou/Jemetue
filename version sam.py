@@ -181,6 +181,7 @@ def gazon(x,y,z): #Permet de créer les tas de gazon
     return gazon
 
 
+
 #tour de contrôle
 cylindre1=copycentre(cylindre)
 cylindre1=grandeur(160,160,400,cylindre1)
@@ -260,6 +261,7 @@ tour = Fusion(diamant1,diamant2, cylindre1)
 tour = Fusion((tour[0],tour[1]*1.5,tour[2]),base,plateforme)
 
 
+
 #dogfight
 f18a=copycentre(f18)
 f18a=grandeur(250,250,90,f18a)
@@ -267,6 +269,7 @@ f18a=rotation(f18a,0.75*np.pi/2,"y")
 f18a=emplacement(0,0,max(tour[1][:,2]+200),f18a)
 dogfight=RepCirculaire(f18a, 3, 700, 2*np.pi, 'z')
 tour=Fusion(tour,dogfight)
+
 
 
 #Hangar
@@ -288,6 +291,7 @@ derriere=RepCirculaire(derriere, 50, 0, np.pi, 'x')
 Hangar=Fusion(toit,devant,derriere)
 Hangar=emplacement(1300,1000,70,Hangar)
 Hangar=reprect3D(Hangar,1,6,1,1,-400,1)
+
 
 
 #piste
@@ -333,7 +337,8 @@ piste2=emplacement(0,1450,60,piste2)
 piste=Fusion(piste,piste2)
 
 
-#building
+
+#building à coté de la tour de contrôle
 rotonde=grandeur(300, 300, 150, cylindre)
 rotonde=emplacement(000, 000, 75, rotonde)
 batisse=grandeur(200, 600, 100, cube)
@@ -391,6 +396,7 @@ building=Fusion(batisse,rotonde,petit,toit,bordure,airvent,porte)
 building=building[0],building[1]*1.5,building[2]
 
 
+
 #taxiway
 taxiway=copycentre(cube)
 taxiway=grandeur(250,2570,20,taxiway)
@@ -408,6 +414,7 @@ f18c=emplacement(900,-800,65,f18c)
 f18c=reprect3D(f18c,1,3,1,1,500,1)
 
 taxiway=Fusion(taxiway,taxiway2,f18c)
+
 
 
 #helipad
@@ -437,6 +444,7 @@ helipad=Fusion(cote,H,bar,base,marche)
 helipad=emplacement(0, 3000, 20, helipad)
 
 
+
 #gazon
 gazon1=gazon(550, 1200, 10)
 gazon2=gazon(350, 650, 10)
@@ -455,5 +463,6 @@ gazon14=gazon(-400, -100, 10)
 gazon15=gazon(500, -400, 10)
 gazonfin=Fusion(gazon1,gazon2,gazon3,gazon4,gazon5,gazon6,gazon7,gazon8,gazon9,gazon10,gazon11,gazon12,gazon13,gazon14,gazon15)
 
+#Fusion de tous les objets
 f,v,n=Fusion(dogfight,tour,piste,Hangar,building,taxiway,helipad,gazonfin)
 EcrireSTLASCII("test.stl", f, v, n)
