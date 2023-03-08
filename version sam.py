@@ -49,6 +49,13 @@ def grandeur(x,y,z,objet): #Permet de changer l'échelle de l'objet (homothétie
     v[:,2]=v[:,2]/(max(v[:,2])-min(v[:,2]))*z #mise à l'échelle composant z
     return f,v,n
 
+def agrandissement(objet,rapport):
+    f1,v1,n1=objet
+    f,v,n=np.array(f1),np.array(v1),np.array(n1)
+    v=v*rapport
+    objet=f,v,n
+    return objet
+
 def rotation(objet,angle,axe): #Permet de tourner un objet
     f1,v1,n1=objet
     f,v,n=np.array(f1),np.array(v1),np.array(n1)
