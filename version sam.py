@@ -195,8 +195,8 @@ diamant2=grandeur(240,240,180,diamant2)
 diamant2=emplacement(0,0,max(diamant1[1][:,2])-20,diamant2)
         
 base=copycentre(cube)
-base=grandeur(3200,7000,10,base)
-base=emplacement(0,250,0,base)
+base=grandeur(3200,7000,50,base)
+base=emplacement(0,250,-20,base)
 
 antenne1 = copycentre(cylindre)
 antenne1 = rotationcyl(antenne1,9,'z')
