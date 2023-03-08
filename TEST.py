@@ -329,7 +329,65 @@ helipad=Fusion(cote,H,bar,base,marche)
 helipad=emplacement(0, 3000, 20, helipad)
 
 
+#===============================================================================
 
+antenne1 = copycentre(cylindre)
+antenne1 = rotationcyl(antenne1,9,'z')
+antenne1 = grandeur(7, 7, 50, antenne1)
+antenne1 = acote_plan(antenne1,'xy')
+
+
+antenne2 = copycentre(cylindre)
+antenne2 = rotationcyl(antenne2,9,'z')
+antenne2 = grandeur(5, 5, 50, antenne2)
+antenne2 = emplacement(0,0,75,antenne2)
+
+boutantenne = copycentre(diamant)
+boutantenne = grandeur(8,8,8,boutantenne)
+boutantenne = emplacement(0,0,100,boutantenne)
+
+
+antenne = Fusion(antenne1,antenne2,boutantenne)
+antenne = translation(antenne,[55,55,0])
+
+plaque = copycentre(cylindre)
+plaque = grandeur(160,160,8,plaque)
+plaque = rotationcyl(plaque,9,"z")
+
+radarbarre = copycentre(cylindre)
+radarbarre = rotationcyl(radarbarre,9,'z')
+radarbarre = acote_plan(radarbarre,'xy')
+radarbarre = grandeur(14,14,60,radarbarre)
+
+#pr = piece radar
+
+pr1=copycentre(cube)
+pr1=grandeur(100, 2, 20, pr1)
+prcentre=RepCirculaire(pr1, 25, 150, 1.05*np.pi, 'x')
+prcentre=RepCirculaire(pr1, 25, 150, 1.05*np.pi, 'x')
+pr=acote_plan(prcentre,"yz")
+
+devant=copycentre(cube)
+devant=grandeur(2, 162, 10,devant)
+devant=emplacement(0,0,0,devant)
+devant=RepCirculaire(devant, 50, 70, np.pi, 'x')
+
+derriere=copycentre(cube)
+derriere=grandeur(2, 152, 10,derriere)
+derriere=emplacement(100, 75, 0, derriere)
+derriere=RepCirculaire(derriere, 50, 0, np.pi, 'x')
+
+pr2 = copycentre(cube)
+pr2 = grandeur(100,300,5,pr2)
+pr2 = acote_plan(pr2,'yz')
+
+radar = Fusion(pr,devant,derriere,pr2)
+radar = rotation(radar,0.5*np.pi,'x')
+radar = grandeur(120,30,25,radar)
+radar = emplacement(0,0,60,radar)
+
+
+plateforme = Fusion(plaque,antenne,radarbarre,radar)
 
 
 
