@@ -236,3 +236,73 @@ def rotationcyl(objet,nb,axe):
             objet2=Fusion(objet2,c)
     return objet2
 
+#=========builiding centraux======
+
+rotonde=grandeurobjet(300, 300, 150, cylindre)
+rotonde=emplacementobjet(000, 000, 75, rotonde)
+batisse=grandeurobjet(200, 600, 100, cube)
+batisse=emplacementobjet(0, -300, 50, batisse)
+petit=grandeurobjet(300, 300, 60, cube)
+petit=emplacementobjet(50, 100, 30, petit)
+#petit=acote_planobjet(petit, 'yz')
+
+
+toit1=grandeurobjet(100, 300, 174, cube)
+toit1=emplacementobjet(100, 0, 0, toit1)
+toit2=dupliquer(toit1)
+toit1=rotationobjet(toit1, np.pi/3,'y')
+toit2=rotationobjet(toit2, 2*np.pi/3,'y')
+
+toit=Fusion(toit1,toit2)
+toit=emplacementobjet(50, 100, 60, toit)
+
+bordure1=rotationobjet(cylindre, np.pi/2, 'x')
+bordure1=grandeurobjet(10, 610, 10, bordure1)
+bordure1=emplacementobjet(-100, -300, 50, bordure1)
+
+bordure2=dupliquer(bordure1)
+bordure2=emplacementobjet(100, -300, 50, bordure2)
+
+bordure3=rotationobjet(cylindre, np.pi/2, 'y')
+bordure3=grandeurobjet(200, 10, 10, bordure3)
+bordure3=emplacementobjet(0, -605, 50, bordure3)
+
+bordure4=grandeurobjet(10, 10, 105, cylindre)
+bordure4=emplacementobjet(100, -605, 53, bordure4)
+bordure5=dupliquer(bordure4)
+bordure5=emplacementobjet(-100, -605, 53, bordure5)
+
+bordure123=Fusion(bordure1,bordure2,bordure3)
+bordure6=dupliquer(bordure123)
+bordure6=emplacementobjet(0, -300, 100, bordure6)
+
+bordure=Fusion(bordure1,bordure2,bordure3,bordure4,bordure5,bordure6)
+
+bloc=grandeurobjet(1, 1, 1, cube)
+base=rotationobjet(triangle, np.pi/2, 'y')
+base=grandeurobjet(5, 5, 5, base)
+base=rotationobjet(triangle, 3*np.pi/2, 'z')
+
+airvent=Fusion(bloc,base)
+airvent=rotationobjet(airvent, np.pi/2, 'y')
+airvent=grandeurobjet(10, 20, 10, airvent)
+airvent=emplacementobjet(-50, -500, 105, airvent)
+airvent=reprect3D(airvent, 3, 4, 1, 50, 100, 1)
+
+porte=grandeurobjet(5, 10, 20, cube)
+porte=reprect3D(porte, 2, 5, 1, 200, 160, 1)
+porte=emplacementobjet(0, -150, 10, porte)
+
+building=Fusion(batisse,rotonde,petit,toit,bordure,airvent,porte)
+
+
+
+
+
+
+
+
+
+
+
+
