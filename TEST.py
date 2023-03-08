@@ -87,30 +87,6 @@ def RepCirculaire(nom,nb,r,a,axe): #Permet de faire une répétition circulaire 
 
 
 
-
-""" Defectueuseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-def reprect(nom,nbx,nby,nbz,dx,dy,dz):
-    f,v,n = nom
-    nv = len(v)
-    for i in range(nbx):
-        if i == 0 :
-            f = np.array(f)
-        else:
-            f = np.array(f+nv)
-        v2 = np.array(v)       
-        n2 = np.array(n)
-        v = v + [dx,0,0]
-        if i == 0:
-            fx = np.array(f)
-            vx = np.array(v2)
-            nx = np.array(n2)
-        else:
-            fx = np.vstack((fx,f))
-            vx = np.vstack((vx,v2))
-            nx = np.vstack((nx,n2))
-    return fx,vx,nx
-   """
-   
    
    
    def sim(v,axe):
@@ -146,69 +122,12 @@ ff,vf,nf = Hangar
 nom_out='hangar.stl'
 EcrireSTLASCII(nom_out, ff, vf, nf)
 
-"""FONCTIN DEFECTUEUSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-def reprect1(nom,nbx,nby,nbz,dx,dy,dz):
-    f,v,n = nom
-    nv = len(v)
-    for i in range(nbx):
-        if i == 0 :
-            f = np.array(f)
-        else:
-            f = np.array(f+nv)
-        v2 = np.array(v)       
-        n2 = np.array(n)
-        v = v + [dx,0,0]
-        if i == 0:
-            fx = np.array(f)
-            vx = np.array(v2)
-            nx = np.array(n2)
-        else:
-            fx = np.vstack((fx,f))
-            vx = np.vstack((vx,v2))
-            nx = np.vstack((nx,n2))
-    nvx = len(vx)
-    for j in range(nby):
-        if j == 0:
-            fx = np.array(fx)
-        else:
-            fx = np.array(fx+nvx)
-        vx2 = np.array(vx)
-        nx2 = np.array(nx)
-        vx = vx + [0,dy,0]
-        print(vx)
-        if j == 0:
-            fxy = np.array(fx)
-            vxy = np.array(vx2)
-            nxy = np.array(nx2)
-        else:
-            fxy = np.vstack((fxy,fx))
-            vxy = np.vstack((vxy,vx))
-            nxy = np.vstack((nxy,nx))
-            
-    return fxy,vxy,nxy
 
-def reprect3Dprof(nom,nbx,nby,nbz,dx,dy,dz):#Ne pas mettre zero lorqu'un axe n'est pas utilisé
-    f,v,n = nom
-    nv = len(v)
-    fe = np.empty([0,3])
-    ve = np.empty([0,3])
-    ne = np.empty([0,3])
-    compteur = 0
-    for i in range(nbx):
-        for j in range(nby):
-            for k in range(nbz):
-                v2 = np.array(v)
-                v2[:,0] = v2[:,0] + (i)*dx
-                v2[:,1] = v2[:,1] + (j)*dy
-                v2[:,2] = v2[:,2] + (k)*dz
-                ve = np.vstack((ve,v2))
-                f2 = np.array(f)
-                decal = compteur*nv
-                fe = np.vstack((fe,f+decal))
-                compteur+=1
-    ne = CalculNormal(fe, ve)
-    return fe,ve,ne
-=================================================================================================================================="""
+
+
+
+
+
 def copycentre(nom):
     f,v,n = nom
     
@@ -271,17 +190,7 @@ def grandeurobjet(x,y,z,objet): #Permet de changer l'échelle du stl (homothéti
     objet = f,v,n
     return objet
 
-def copy2(nom):
-    f,v,n = nom
-    nv = len(v)
-    fc = np.array(f+nv)
-    vc = np.array(v)
-    nc = np.array(n)
-    
-    f = np.vstack((f,fc))
-    v = np.vstack((v,vc))
-    n = np.vstack((n,nc))
-    return f,v,n
+
 
 #=====================================================================================================================
 #Nouvelle fonction répétition a utiliser
@@ -296,7 +205,7 @@ def copieob(objet):
     return objet
 
 
-def reprect3D(objet,nbx,nby,nbz,dx,dy,dz):
+def reprect3D(objet,nbx,nby,nbz,dx,dy,dz): #Si l'instance est 0, mettre 1
     rep = []
     for i in range(nbx):
         for j in range(nby):
