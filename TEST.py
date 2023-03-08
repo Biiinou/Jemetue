@@ -3,41 +3,6 @@ import struct
 from MEC1315_STL import *
 
 
-def centrer(v): #Permet de centrer le stl en(0,0,0)
-    v[:,0]=v[:,0]-(max(v[:,0])+min(v[:,0]))/2 #centre axe x
-    v[:,1]=v[:,1]-(max(v[:,1])+min(v[:,1]))/2 #centre axe y
-    v[:,2]=v[:,2]-(max(v[:,2])+min(v[:,2]))/2 #centre axe z
-    return v
-
-def grandeur(x,y,z,v): #Permet de changer l'échelle du stl (homothétie), Dois utiliser centrer avant
-    v[:,0]=v[:,0]/(max(v[:,0])-min(v[:,0]))*x #mise à l'échelle composant x
-    v[:,1]=v[:,1]/(max(v[:,1])-min(v[:,1]))*y #mise à l'échelle composant y
-    v[:,2]=v[:,2]/(max(v[:,2])-min(v[:,2]))*z #mise à l'échelle composant z
-    return v
-
-def emplacement(x,y,z,v): #Permet de déplacer le stl
-    v[:,0]=v[:,0]-(max(v[:,0])+min(v[:,0]))/2+x #déplacement en x
-    v[:,1]=v[:,1]-(max(v[:,1])+min(v[:,1]))/2+y #déplacement en y
-    v[:,2]=v[:,2]-(max(v[:,2])+min(v[:,2]))/2+z #déplacement en z
-    return v
-    
-def rotation(v,angle,axe): #Permet de tourner le stl
-    if axe =="z": #Tourne sur l'axe z
-        v=v.dot(np.array([[np.cos(angle),np.sin(angle),0],[-np.sin(angle),np.cos(angle),0],[0,0,1]]))
-    elif axe == "y": #Tourne sur l'axe y
-        v=v.dot(np.array([[np.cos(angle),0,np.sin(angle)],[0,1,0],[-np.sin(angle),0,np.cos(angle)]]))
-    elif axe == "x": #Tourne sur l'axe x
-        v=v.dot(np.array([[1,0,0],[0,np.cos(angle),np.sin(angle)],[0,-np.sin(angle),np.cos(angle)]]))
-    return v
-
-def acote_plan(v,plan): #Perment de déposer le stl sur un plan
-    if plan =="xy": #Sur plan XY
-        v[:,2]=v[:,2]-min(v[:,2])
-    if plan =="xz": #Sur plan XZ
-        v[:,1]=v[:,1]-min(v[:,1])
-    if plan =="yz": #Sur plan YZ
-        v[:,0]=v[:,0]-min(v[:,0])
-    return v
 
 def Fusion(*args): #Permet de fusionner tous les stl pour Meshlab
     l = len(args) #Nombre d'élément à fusionner
