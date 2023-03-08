@@ -252,7 +252,19 @@ def grandeurobjet(x,y,z,objet): #Permet de changer l'échelle du stl (homothéti
     v[:,1]=v[:,1]/(max(v[:,1])-min(v[:,1]))*y #mise à l'échelle composant y
     v[:,2]=v[:,2]/(max(v[:,2])-min(v[:,2]))*z #mise à l'échelle composant z
     return f,v,n
-    
+
+    def rotationobjet(objet,angle,axe): #Permet de tourner le stl
+    f1,v1,n1=objet
+    f,v,n=np.array(f1),np.array(v1),np.array(n1)
+    if axe =="z": #Tourne sur l'axe z
+        v=v.dot(np.array([[np.cos(angle),np.sin(angle),0],[-np.sin(angle),np.cos(angle),0],[0,0,1]]))
+    elif axe == "y": #Tourne sur l'axe y
+        v=v.dot(np.array([[np.cos(angle),0,np.sin(angle)],[0,1,0],[-np.sin(angle),0,np.cos(angle)]]))
+    elif axe == "x": #Tourne sur l'axe x
+        v=v.dot(np.array([[1,0,0],[0,np.cos(angle),np.sin(angle)],[0,-np.sin(angle),np.cos(angle)]]))
+    return f,v,n
+
+#=============
     def translation(objet, dep):#Déplacement donné sous la forme d'une matrice [dx,dy,dz]
     f,v,n = objet
     v = v + dep
