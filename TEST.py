@@ -286,6 +286,16 @@ def copy2(nom):
 #=====================================================================================================================
 #Nouvelle fonction répétition a utiliser
 
+
+def copieob(objet):
+    f,v,n = objet
+    fc = np.array(f)
+    vc = np.array(v)
+    nc = np.array(n)
+    objet = fc,vc,nc
+    return objet
+
+
 def reprect3D(objet,nbx,nby,nbz,dx,dy,dz):
     rep = []
     for i in range(nbx):
