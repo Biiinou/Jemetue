@@ -227,9 +227,9 @@ def reprect3D(objet,nbx,nby,nbz,dx,dy,dz): #Si l'instance est 0, mettre 1
 
 
 
-def rotationcyl(objet,nb,axe):
+def rotationcyl(objet,nb,axe): #Permet de rencre le cylindre rond
     for i in range (nb):
-        c=objet[0],rotation(objet[1],np.pi*i/nb,axe),objet[2]
+        c=rotation(objet,np.pi*i/nb,axe) #fait la rotation autour de l'axe
         if i == 0:
             objet2=c
         else:
