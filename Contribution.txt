@@ -12,4 +12,4 @@ Objet: Tour, Dogfight, Piste, Taxiway
 
 Vincent Bouchard (2207722)
 Fonction: Copycentre, translation, copieob, reprect3D
-Objet: Plateforme
+Objet: Plateforme, Entrepot
