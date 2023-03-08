@@ -50,7 +50,7 @@ def RepCirculaire(nom,nb,r,a,axe): #Permet de faire une répétition circulaire 
             vt=np.vstack((vt,v2))
     return ft,vt,nt
 
-#=======repcirculaire optimiser=====
+#=======repcirculaire optimiser /\DÉSUET/\=====
 def RepCirculaire(nom,nb,r,a,axe):                 
     f1,v1,n1=nom  
     t=np.linspace(0,a,nb+1)
@@ -83,6 +83,32 @@ def RepCirculaire(nom,nb,r,a,axe):
         
         objet=ft,vt,nt
     return objet
+
+#=======répetition circulaire optimiser encore plus=====
+
+def RepCirculaire(nom,nb,rayon,angle,axe):                   
+    t=np.linspace(0,angle,nb+1)
+    t=t[:-1]
+    if axe=="z":            
+        x,y=rayon*np.cos(t),rayon*np.sin(t)
+    if axe=="y":            
+        x,z=rayon*np.cos(t),rayon*np.sin(t)
+    if axe=="x":            
+        y,z=rayon*np.cos(t),rayon*np.sin(t)   
+        
+    objett=np.empty([3,3])
+    for i in range(len(t)): 
+        objet=rotation(nom,t[i],axe)
+        
+        if axe=="z":
+            objet=translation(objet,[x[i],y[i],0]) 
+        if axe=="y":
+            objet=translation(objet,[x[i],0,z[i]] ) 
+        if axe=="x":
+            objet=translation(objet,[0,y[i],z[i]])
+
+        objett=Fusion(objett,objet)
+    return objett
 
    
    
