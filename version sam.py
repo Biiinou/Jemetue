@@ -14,6 +14,7 @@ Created on Thu Feb 23 14:44:50 2023
 import numpy as np
 from MEC1315_STL import *
 
+#Lire les différents fichiers
 diamant = LireSTL("Diamant.stl")
 cylindre = LireSTL("Cylindre.stl")
 triangle = LireSTL("Triangle.stl")
