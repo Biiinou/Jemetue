@@ -301,6 +301,34 @@ porte=emplacementobjet(0, -150, 10, porte)
 building=Fusion(batisse,rotonde,petit,toit,bordure,airvent,porte)
 
 
+#========helipad======
+
+cote=grandeur(6, 40, 10, cube)
+cote=emplacement(0, 0, 20, cote)
+cote=RepCirculaire(cote, 33, 200, 2*np.pi, 'z')
+cote=emplacement(0, 3000, 20, cote)
+
+H=grandeur(180, 10, 15, cube)
+H=reprect3D(H, 1, 2, 1, 1, 130, 1)
+H=emplacement(0, 3000, 20, H)
+
+bar=grandeur(10, 130, 15, cube)
+bar=emplacement(0, 3000, 20, bar)
+
+base=grandeur(500, 500, 20, cube)
+base=emplacement(0, 3000, 6, base)
+
+marche=grandeur(20, 20, 100, triangle)
+marche=rotation(marche, np.pi/2, 'y')
+marche=rotation(marche, 3*np.pi/2, 'z')
+marche=emplacement(10, 0,6 , marche)
+marche=RepCirculaire(marche, 4, 250, 2*np.pi, 'z')
+marche=emplacement(0, 3000, 6, marche)
+
+helipad=Fusion(cote,H,bar,base,marche)
+helipad=emplacement(0, 3000, 20, helipad)
+
+
 
 
 
