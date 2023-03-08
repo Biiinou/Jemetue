@@ -391,8 +391,49 @@ plateforme = Fusion(plaque,antenne,radarbarre,radar)
 
 
 
+#========================================================================================
+
+def gazon(x,y,z): #Permet de créer les tas de gazon
+    pel=grandeur(20, 10, 1, triangle) #création de 5 gazon
+    pel=rotation(pel, np.pi/2, "y")
+    pel2=copycentre(pel)
+    pel2=emplacement(5, 20, 5, pel2)
+    pel3=copycentre(pel)
+    pel3=emplacement(-5, 15, 7, pel3)
+    pel4=copycentre(pel)
+    pel4=emplacement(-5, -8, 2, pel4)
+    pelgr1=Fusion(pel,pel2,pel3,pel4) #création de 4 tas de gazon
+    pelgr2=copycentre(pelgr1)
+    pelgr2=emplacement(0, 0, 8, pelgr2)
+    pelgr2=rotation(pelgr2, np.pi/3, 'z')
+    pelgr3=copycentre(pelgr1)
+    pelgr3=emplacement(-15, 20, 10, pelgr3)
+    pelgr3=rotation(pelgr3, 5*np.pi/3, 'z')
+    pelgr4=copycentre(pelgr1)
+    pelgr4=emplacement(-15, -20, 12, pelgr4)
+    pelgr4=rotation(pelgr4, 5*np.pi/6, 'z')
+    gazon=Fusion(pelgr1,pelgr2,pelgr3,pelgr4)
+    gazon=emplacement(x, y, z, gazon)
+    return gazon
 
 
+#gazon
+gazon1=gazon(550, 1200, 10)
+gazon2=gazon(350, 650, 10)
+gazon3=gazon(-100, 900, 10)
+gazon4=gazon(1200, 1400, 10)
+gazon5=gazon(950, 1950, 10)
+gazon6=gazon(1450, 2500, 10)
+gazon7=gazon(800, 3400, 10)
+gazon8=gazon(-500, 3000, 10)
+gazon9=gazon(150, 2200, 10)
+gazon10=gazon(-650, 1400, 10)
+gazon11=gazon(-1300, 3500, 10)
+gazon12=gazon(-1200, 850, 10)
+gazon13=gazon(-1500, 2100, 10)
+gazon14=gazon(-400, -100, 10)
+gazon15=gazon(500, -400, 10)
+gazonfin=Fusion(gazon1,gazon2,gazon3,gazon4,gazon5,gazon6,gazon7,gazon8,gazon9,gazon10,gazon11,gazon12,gazon13,gazon14,gazon15)
 
 
 
