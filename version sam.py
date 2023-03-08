@@ -68,8 +68,8 @@ def copycentre(nom):
     vc[:,1]=vc[:,1]-(max(vc[:,1])+min(vc[:,1]))/2 #centre axe y
     vc[:,2]=vc[:,2]-(max(vc[:,2])+min(vc[:,2]))/2 #centre axe z 
     objet=fc,vc,nc
-    return objet
-
+    return objet        
+    
 def RepCirculaire(nom,nb,r,a,axe):                 
     f1,v1,n1=nom
     nv1=len(v1)    
@@ -138,21 +138,14 @@ def translation(objet, dep):#Déplacement donné sous la forme d'une matrice [dx
     return objet
 
 def reprect3D(objet,nbx,nby,nbz,dx,dy,dz): #Si l'instance est 0, mettre 1
-    rep = []
+    rep = np.empty((3,3))
     for i in range(nbx):
         for j in range(nby):
             for k in range(nbz):
                 copie = copieob(objet)
                 copie = translation(objet, [i*dx,j*dy,k*dz])
-                rep += [copie]
-                
-    for i in range(len(rep)):
-        if i == 0:
-            repet = rep[0]
-        else:
-            repet = Fusion(rep[i],repet)
-            
-    return repet
+                rep = Fusion(copie,rep)         
+    return rep
 
 def rotationcyl(objet,nb,axe): #Permet de rendre le cylindre rond
     for i in range (nb):
@@ -163,6 +156,29 @@ def rotationcyl(objet,nb,axe): #Permet de rendre le cylindre rond
             objet2=Fusion(objet2,c)
     return objet2
     
+def gazon(x,y,z): #Permet de créer les tas de gazon
+    pel=grandeur(20, 10, 1, triangle) #création de 5 gazon
+    pel=rotation(pel, np.pi/2, "y")
+    pel2=copycentre(pel)
+    pel2=emplacement(5, 20, 5, pel2)
+    pel3=copycentre(pel)
+    pel3=emplacement(-5, 15, 7, pel3)
+    pel4=copycentre(pel)
+    pel4=emplacement(-5, -8, 2, pel4)
+    pelgr1=Fusion(pel,pel2,pel3,pel4) #création de 4 tas de gazon
+    pelgr2=copycentre(pelgr1)
+    pelgr2=emplacement(0, 0, 8, pelgr2)
+    pelgr2=rotation(pelgr2, np.pi/3, 'z')
+    pelgr3=copycentre(pelgr1)
+    pelgr3=emplacement(-15, 20, 10, pelgr3)
+    pelgr3=rotation(pelgr3, 5*np.pi/3, 'z')
+    pelgr4=copycentre(pelgr1)
+    pelgr4=emplacement(-15, -20, 12, pelgr4)
+    pelgr4=rotation(pelgr4, 5*np.pi/6, 'z')
+    gazon=Fusion(pelgr1,pelgr2,pelgr3,pelgr4)
+    gazon=emplacement(x, y, z, gazon)
+    return gazon
+
 
 #tour de contrôle
 cylindre1=copycentre(cylindre)
@@ -182,8 +198,65 @@ base=copycentre(cube)
 base=grandeur(3200,7000,10,base)
 base=emplacement(0,250,0,base)
 
+antenne1 = copycentre(cylindre)
+antenne1 = rotationcyl(antenne1,9,'z')
+antenne1 = grandeur(7, 7, 50, antenne1)
+antenne1 = acote_plan(antenne1,'xy')
+
+antenne2 = copycentre(cylindre)
+antenne2 = rotationcyl(antenne2,9,'z')
+antenne2 = grandeur(5, 5, 50, antenne2)
+antenne2 = emplacement(0,0,75,antenne2)
+
+boutantenne = copycentre(diamant)
+boutantenne = grandeur(8,8,8,boutantenne)
+boutantenne = emplacement(0,0,100,boutantenne)
+
+antenne = Fusion(antenne1,antenne2,boutantenne)
+antenne = translation(antenne,[55,55,0])
+
+plaque = copycentre(cylindre)
+plaque = grandeur(160,160,8,plaque)
+plaque = rotationcyl(plaque,9,"z")
+
+radarbarre = copycentre(cylindre)
+radarbarre = rotationcyl(radarbarre,9,'z')
+radarbarre = acote_plan(radarbarre,'xy')
+radarbarre = grandeur(14,14,60,radarbarre)
+
+#pr = piece radar
+
+pr1=copycentre(cube)
+pr1=grandeur(100, 2, 20, pr1)
+prcentre=RepCirculaire(pr1, 25, 150, 1.05*np.pi, 'x')
+prcentre=RepCirculaire(pr1, 25, 150, 1.05*np.pi, 'x')
+pr=acote_plan(prcentre,"yz")
+
+devant=copycentre(cube)
+devant=grandeur(2, 162, 10,devant)
+devant=emplacement(0,0,0,devant)
+devant=RepCirculaire(devant, 50, 70, np.pi, 'x')
+
+derriere=copycentre(cube)
+derriere=grandeur(2, 152, 10,derriere)
+derriere=emplacement(100, 75, 0, derriere)
+derriere=RepCirculaire(derriere, 50, 0, np.pi, 'x')
+
+pr2 = copycentre(cube)
+pr2 = grandeur(100,300,5,pr2)
+pr2 = acote_plan(pr2,'yz')
+
+radar = Fusion(pr,devant,derriere,pr2)
+radar = rotation(radar,0.5*np.pi,'x')
+radar = grandeur(120,30,25,radar)
+radar = emplacement(0,0,60,radar)
+
+plateforme = Fusion(plaque,antenne,radarbarre,radar)
+plateforme=grandeur(260,260,200,plateforme)
+plateforme=emplacement(0,0,980,plateforme)
+
 tour = Fusion(diamant1,diamant2, cylindre1)
-tour = Fusion((tour[0],tour[1]*1.5,tour[2]),base)
+tour = Fusion((tour[0],tour[1]*1.5,tour[2]),base,plateforme)
 
 
 #dogfight
@@ -363,22 +436,23 @@ helipad=Fusion(cote,H,bar,base,marche)
 helipad=emplacement(0, 3000, 20, helipad)
 
 
-f,v,n=Fusion(dogfight,tour,piste,Hangar,building,taxiway,helipad)
+#gazon
+gazon1=gazon(550, 1200, 10)
+gazon2=gazon(350, 650, 10)
+gazon3=gazon(-100, 900, 10)
+gazon4=gazon(1200, 1400, 10)
+gazon5=gazon(950, 1950, 10)
+gazon6=gazon(1450, 2500, 10)
+gazon7=gazon(800, 3400, 10)
+gazon8=gazon(-500, 3000, 10)
+gazon9=gazon(150, 2200, 10)
+gazon10=gazon(-650, 1400, 10)
+gazon11=gazon(-1300, 3500, 10)
+gazon12=gazon(-1200, 850, 10)
+gazon13=gazon(-1500, 2100, 10)
+gazon14=gazon(-400, -100, 10)
+gazon15=gazon(500, -400, 10)
+gazonfin=Fusion(gazon1,gazon2,gazon3,gazon4,gazon5,gazon6,gazon7,gazon8,gazon9,gazon10,gazon11,gazon12,gazon13,gazon14,gazon15)
+
+f,v,n=Fusion(dogfight,tour,piste,Hangar,building,taxiway,helipad,gazonfin)
 EcrireSTLASCII("test.stl", f, v, n)
-
-
-#==========fusion opimisé======
-
-def Fusion(*args):
-    
-    l = len(args) 
-    f,v,n=np.empty((3,3))
-    nv=1
-    for i in range(l):
-        f1,v1,n1 = args[i]
-        f = np.vstack((f,f1+nv))
-        v = np.vstack((v,v1))
-        n = np.vstack((n,n1))
-        nv = len(v)
-        objet=f,v,n
-    return objet
