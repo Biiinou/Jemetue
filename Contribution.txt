@@ -1,0 +1,16 @@
+Christophe Rinfret (2210411)
+Fonction: Répétition circulaire, Fusion, dupliquer
+Objet: Hangard, Helipad, Building
+
+
+Jean-Daniel Morin-Fortin (2214764)
+Fonction: Copycentre, reprect3D, rotationcyl
+Objet: Tour, Gazon
+
+Samuel Jeffrey (2198946)
+Fonction: acote_planobjet, emplacementobjet, grandeurobjet, rotationobjet, reprect3D
+Objet: Tour, Dogfight, Piste, Taxiway
+
+Vincent Bouchard (2207722)
+Fonction: Copycentre, translation, copieob, reprect3D
+Objet: Plateforme
