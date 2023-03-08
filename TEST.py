@@ -18,7 +18,7 @@ def Fusion(*args): #Permet de fusionner tous les stl pour Meshlab
             n = np.vstack((n,n2))
             nv = len(v)
     return f,v,n
-
+#=====repcirculaire désuet=====#
 def RepCirculaire(nom,nb,r,a,axe): #Permet de faire une répétition circulaire selon un nombre d'élément, un rayon et un angle, sur un axe donné                 
     f1,v1,n1=nom
     nv1=len(v1)    
@@ -50,7 +50,39 @@ def RepCirculaire(nom,nb,r,a,axe): #Permet de faire une répétition circulaire 
             vt=np.vstack((vt,v2))
     return ft,vt,nt
 
+#=======repcirculaire optimiser=====
+def RepCirculaire(nom,nb,r,a,axe):                 
+    f1,v1,n1=nom  
+    t=np.linspace(0,a,nb+1)
+    t=t[:-1]
+    if axe=="z":            
+        x,y=r*np.cos(t),r*np.sin(t)
+    if axe=="y":            
+        x,z=r*np.cos(t),r*np.sin(t)
+    if axe=="x":            
+        y,z=r*np.cos(t),r*np.sin(t)   
+        
+    ft=vt=nt=np.empty([0,3])
+    nv=len(vt)
+    for i in range(len(t)):
+        
+        objet=rotation(nom,t[i],axe)
+        f1,v1,n1=objet
 
+        if axe=="z":
+            v1=v1+[x[i],y[i],0] 
+        if axe=="y":
+            v1=v1+[x[i],0,z[i]] 
+        if axe=="x":
+            v1=v1+[0,y[i],z[i]]
+        
+        ft=np.vstack((ft,f1+nv))
+        nt=np.vstack((nt,n1))
+        vt=np.vstack((vt,v1))
+        nv=len(vt)
+        
+        objet=ft,vt,nt
+    return objet
 
    
    
