@@ -302,3 +302,18 @@ def reprect3D(objet,nbx,nby,nbz,dx,dy,dz):
             repet = Fusion(rep[i],repet)
             
     return repet
+
+
+
+
+
+
+def rotationcyl(objet,nb,axe):
+    for i in range (nb):
+        c=objet[0],rotation(objet[1],np.pi*i/nb,axe),objet[2]
+        if i == 0:
+            objet2=c
+        else:
+            objet2=Fusion(objet2,c)
+    return objet2
+
