@@ -85,6 +85,10 @@ def RepCirculaire(nom,nb,r,a,axe): #Permet de faire une répétition circulaire 
             vt=np.vstack((vt,v2))
     return ft,vt,nt
 
+
+
+
+""" Defectueuseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 def reprect(nom,nbx,nby,nbz,dx,dy,dz):
     f,v,n = nom
     nv = len(v)
@@ -105,7 +109,7 @@ def reprect(nom,nbx,nby,nbz,dx,dy,dz):
             vx = np.vstack((vx,v2))
             nx = np.vstack((nx,n2))
     return fx,vx,nx
-   
+   """
    
    
    
@@ -142,7 +146,7 @@ ff,vf,nf = Hangar
 nom_out='hangar.stl'
 EcrireSTLASCII(nom_out, ff, vf, nf)
 
-#FONCTIN DEFECTUEUSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+"""FONCTIN DEFECTUEUSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 def reprect1(nom,nbx,nby,nbz,dx,dy,dz):
     f,v,n = nom
     nv = len(v)
@@ -204,7 +208,7 @@ def reprect3Dprof(nom,nbx,nby,nbz,dx,dy,dz):#Ne pas mettre zero lorqu'un axe n'e
                 compteur+=1
     ne = CalculNormal(fe, ve)
     return fe,ve,ne
-#==================================================================================================================================
+=================================================================================================================================="""
 def copycentre(nom):
     f,v,n = nom
     
