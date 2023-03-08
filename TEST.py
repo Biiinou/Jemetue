@@ -238,6 +238,11 @@ def rotationcyl(objet,nb,axe):
 
 #=========builiding centraux======
 
+def dupliquer(objet):
+    f1,v1,n1=objet
+    f,v,n=np.array(f1),np.array(v1),np.array(n1)
+    return f,v,n
+
 rotonde=grandeurobjet(300, 300, 150, cylindre)
 rotonde=emplacementobjet(000, 000, 75, rotonde)
 batisse=grandeurobjet(200, 600, 100, cube)
